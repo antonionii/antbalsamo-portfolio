@@ -52,7 +52,7 @@ const projectCardData: ProjectCard[] = [
     linkTo: "/Blocks/0a625c571aa34731ad7fd2d2c7f37a95",
     bubbleText: "Open Project",
     pageId: "0a625c571aa34731ad7fd2d2c7f37a95",
-    tags: ["Human-Centered Design", "Workflows"],
+    tags: ["HCD", "Workflows"],
     lineBreaks: 0,
     passwordProtected: true,
   },

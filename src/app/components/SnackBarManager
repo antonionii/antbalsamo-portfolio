@@ -1,0 +1,69 @@
+import React, { useState, forwardRef, useImperativeHandle } from "react";
+import { Snackbar } from "@mui/material";
+import styled from "styled-components";
+
+// Styled Snackbar component
+const StyledSnackbar = ({ message, onClose, autoHideDuration = 3200 }) => {
+  const colorForegroundTextDefault = getComputedStyle(document.documentElement).getPropertyValue('--color-Foreground-Text-Default').trim();
+  const colorBackgroundDefault = getComputedStyle(document.documentElement).getPropertyValue('--color-Background-Default').trim();
+
+  return (
+    <Snackbar
+      open={true}
+      autoHideDuration={autoHideDuration}
+      onClose={onClose}
+      message={message}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      sx={{
+        '& .MuiSnackbarContent-root': {
+          backgroundColor: colorBackgroundDefault,
+          color: colorForegroundTextDefault,
+          fontSize: '1.4rem',
+          fontWeight: 500,
+          fontFamily: "Inter",
+          boxShadow: "1rem 0.6rem 0rem 0rem black",
+          width: '100%',
+          maxWidth: '600px',
+          '@media (max-width: 780px)': {
+            maxWidth: '70%',
+            fontSize: '1rem',
+            padding: '8px 16px',
+          },
+        },
+      }}
+    />
+  );
+};
+
+// SnackbarManager component
+const SnackbarManager = forwardRef((props, ref) => {
+  const [snackbarQueue, setSnackbarQueue] = useState([]);
+
+  // Method to add a new snackbar
+  const showSnackbar = (message) => {
+    setSnackbarQueue((prevQueue) => {
+      const newQueue = [...prevQueue, { key: Date.now(), message }];
+      if (newQueue.length > 5) newQueue.shift(); // Limit to 5
+      return newQueue;
+    });
+  };
+
+  useImperativeHandle(ref, () => ({
+    showSnackbar,
+  }));
+
+  return (
+    <div style={{ position: "fixed", top: 16, left: 0, right: 0, zIndex: 1400 }}>
+      {snackbarQueue.map((snackbar, index) => (
+        <div key={snackbar.key} style={{ marginBottom: '1.5rem', position: "relative", top: index * 60 }}>
+          <StyledSnackbar
+            message={snackbar.message}
+            onClose={() => setSnackbarQueue((prevQueue) => prevQueue.filter((snack) => snack.key !== snackbar.key))}
+          />
+        </div>
+      ))}
+    </div>
+  );
+});
+
+export default SnackbarManager;
