@@ -221,17 +221,17 @@ input, select, textarea {
 }
 
 .linkedin {
-  background-color: var(--color-tag-linkedin);
+  background-color: var(--color-tag-github);
 }
 .linkedin:hover {
-  background-color: var(--color-tag-linkedin-hover);
+  background-color: var(--color-tag-github-hover);
 }
 
 .email {
-  background-color: var(--color-tag-email);
+  background-color: var(--color-tag-github);
 }
 .email:hover {
-  background-color: var(--color-tag-email-hover);
+  background-color: var(--color-tag-github-hover);
 }
 
 /* ============================================
